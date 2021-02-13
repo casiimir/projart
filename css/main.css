@@ -1,0 +1,30 @@
+body {
+  text-align: center;
+}
+
+img {
+  object-fit: cover;
+  max-width: 150px;
+  height: 220px;
+  margin: 5px;
+  overflow: hidden;
+}
+
+.inputSearch {
+  width: 200px;
+  border: 0;
+  padding: 5px 5px 5px 10px;
+  background: lightsalmon;
+  border-radius: 6px;
+  outline: none;
+  color: white;
+  text-align: center;
+  font-weight: bold;
+}
+
+.wrapper {
+  margin-top: 50px;  
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
