@@ -9,7 +9,7 @@ const getDataFrom = async (ID) => {
   const result = await fetch(`${states.config.baseUrl}objects/${ID}`);
   const data = await result.json();
 
-  return data;
+  return (data.artistDisplayName === 'Albrecht Dürer') ? data : null;
 }
 
 const states = {

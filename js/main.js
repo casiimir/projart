@@ -1,37 +1,7 @@
 import {searchBy, getDataFrom} from './searchBy.js';
-
-const setDataFromSearch = async(name) => {
-  const result = await fetch(`${states.config.baseUrl}search?q=${name}`);
-  const data = await result.json();
-
-  states.dataSearch = data;
-
-  states.dataSearch.objectIDs.splice(0, 105).forEach(el => {
-    setDataFromID(el);
-  });
-
-}
-
-const setDataFromID = async(id) => {
-  const result = await fetch(`${states.config.baseUrl}objects/${id}`);
-  const data = await result.json();
-
-  states.data = data;
-  console.log(data)
-  createImageFrom(data.primaryImageSmall);
-}
-
-// Extractors
+import createCard from './card.js';
 
 
-// DOM card
-const createImageFrom = (url) => {
-    const parent = document.querySelector('.wrapper');
-    const image = document.createElement('img');
-  
-    image.src = url;
-    parent.appendChild(image);
-}
 
 // Init
 const states = {
@@ -42,26 +12,14 @@ const states = {
   data: '',
 }
 
-const inputSearch = document.querySelector('.inputSearch');
-const wrapper = document.querySelector('.wrapper');
+const albrechtDurerIDs = searchBy('Albrecht Dürer');
 
-inputSearch.addEventListener('change', () => {
-  setDataFromSearch(inputSearch.value);
-  wrapper.innerHTML = '';
+albrechtDurerIDs.then(IDs => {
+  IDs.splice(0,15).forEach(ID => {
+    const artworks = getDataFrom(ID);
+    
+    artworks.then((artwork) => {
+      createCard(artwork.primaryImageSmall, artwork.title);
+    })
+  })
 })
-
-// Promise.all([
-//   setDataFromID(4435),    // Una volta che questa promise è completata...
-//   setDataFromSearch('Van Gogh') // passa a questa e se anche questa è completata...
-// ])
-// .then(y => { // ritorna i valori assegnati allo states
-//   console.log('search:', states.dataSearch)
-//   console.log('data:', states.data)
-
-//   // states.dataSearch.objectIDs.splice(0, 5).forEach(el => {
-//   //   console.log(setDataFromID(el.primaryImageSmall))  // e ne popola per quanti presenti con createImageFrom()
-//   // });
-
-// })
-
-const values = searchBy('Durer');

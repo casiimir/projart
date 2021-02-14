@@ -1,0 +1,35 @@
+.authorPage
+  padding: 0 0 0 20px
+  height: 100vh
+
+  background-image: url('https://collectionapi.metmuseum.org/api/collection/v1/iiif/387383/766693/main-image')
+  background-repeat: no-repeat
+  background-size: cover
+  background-position: center
+
+  color: $primary-color
+
+  h2, i
+    position: relative
+    top: 65vh
+
+    text-shadow: 3px 5px 2px $secondary-color
+
+    z-index: 2
+  
+  h2
+    font-size: 3rem
+  i
+    font-size: 1.2rem
+  
+  .overlay
+    position: absolute    
+    top: 0
+    left: 0
+    
+    width: 100%
+    height: 100%
+
+    background-color: rgba(0,0,0,.25)
+
+    z-index: 1
