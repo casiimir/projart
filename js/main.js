@@ -1,19 +1,26 @@
-const getIDsFromSearch = async(name) => {
-  clearWrapper();
-  
+const setDataFromSearch = async(name) => {
   const result = await fetch(`${states.config.baseUrl}search?q=${name}`);
   const data = await result.json();
-  data.objectIDs.splice(0, 5).map((el) => {
-    getDataFromID(el);
-  })
+
+  states.dataSearch = data;
+
+  states.dataSearch.objectIDs.splice(0, 5).forEach(el => {
+    setDataFromID(el);
+  });
+
 }
 
-const getDataFromID = async(id) => {
+const setDataFromID = async(id) => {
   const result = await fetch(`${states.config.baseUrl}objects/${id}`);
   const data = await result.json();
 
+  states.data = data;
+
   createImageFrom(data.primaryImageSmall);
 }
+
+// Extractors
+
 
 // DOM card
 const createImageFrom = (url) => {
@@ -24,26 +31,33 @@ const createImageFrom = (url) => {
     parent.appendChild(image);
 }
 
-// Clear the wrapper
-const clearWrapper = () => {
-  const wrapper = document.querySelector('.wrapper');
-  wrapper.innerHTML = '';
-}
-
-
 // Init
 const states = {
   config: {
     baseUrl: 'https://collectionapi.metmuseum.org/public/collection/v1/',
-  }
+  },
+  dataSearch: [],
+  data: '',
 }
 
 const inputSearch = document.querySelector('.inputSearch');
 const wrapper = document.querySelector('.wrapper');
 
 inputSearch.addEventListener('change', () => {
-  getIDsFromSearch(inputSearch.value);
+  setDataFromSearch(inputSearch.value);
   wrapper.innerHTML = '';
 })
 
-// getDataFromID(245)
+// Promise.all([
+//   setDataFromID(4435),    // Una volta che questa promise è completata...
+//   setDataFromSearch('Van Gogh') // passa a questa e se anche questa è completata...
+// ])
+// .then(y => { // ritorna i valori assegnati allo states
+//   console.log('search:', states.dataSearch)
+//   console.log('data:', states.data)
+
+//   // states.dataSearch.objectIDs.splice(0, 5).forEach(el => {
+//   //   console.log(setDataFromID(el.primaryImageSmall))  // e ne popola per quanti presenti con createImageFrom()
+//   // });
+
+// })
