@@ -1,10 +1,12 @@
+import {searchBy, getDataFrom} from './searchBy.js';
+
 const setDataFromSearch = async(name) => {
   const result = await fetch(`${states.config.baseUrl}search?q=${name}`);
   const data = await result.json();
 
   states.dataSearch = data;
 
-  states.dataSearch.objectIDs.splice(0, 5).forEach(el => {
+  states.dataSearch.objectIDs.splice(0, 105).forEach(el => {
     setDataFromID(el);
   });
 
@@ -15,7 +17,7 @@ const setDataFromID = async(id) => {
   const data = await result.json();
 
   states.data = data;
-
+  console.log(data)
   createImageFrom(data.primaryImageSmall);
 }
 
@@ -61,3 +63,5 @@ inputSearch.addEventListener('change', () => {
 //   // });
 
 // })
+
+const values = searchBy('Durer');
